@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-gb" data-ng-app="monospaced.qrcode" id="ng-app">
+<head>
+  <meta charset="utf-8">
+  <title>Angular QR Code</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="//necolas.github.io/normalize.css/2.1.1/normalize.css">
+  <style>
+    html {
+      background: #fff;
+      color: #1c000e;
+    }
+    body {
+      margin: 8px auto;
+      max-width: 90%;
+      width: 480px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-weight: normal;
+      font-size: 30px;
+    }
+    img {
+      display: block;
+      margin-bottom: 8px;
+    }
+    a {
+      color: #000;
+      text-decoration: none;
+      -webkit-transition: all 250ms ease-in-out;
+         -moz-transition: all 250ms ease-in-out;
+           -o-transition: all 250ms ease-in-out;
+              transition: all 250ms ease-in-out;
+    }
+    a:hover,
+    a:focus,
+    a:active {
+      color: #0067ce;
+      -webkit-transition: none;
+         -moz-transition: none;
+           -o-transition: none;
+              transition: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Angular QR Code</h1>
+
+  <qrcode>http://monospaced.com</qrcode>
+
+  <small>
+    <a href="https://github.com/monospaced/angular-elastic">https://github.com/monospaced/angular-elastic</a> <br>
+    <a href="http://monospaced.github.io/">Monospaced Labs</a>
+  </small>
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  <script src="../qrcode-generator/js/qrcode.js"></script>
+  <script src="qrcode.js"></script>
+</body>
+</html>
