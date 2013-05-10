@@ -7,22 +7,36 @@
   <link rel="stylesheet" href="//necolas.github.io/normalize.css/2.1.1/normalize.css">
   <style>
     html {
+      overflow-y: scroll;
       background: #fff;
       color: #1c000e;
     }
     body {
-      margin: 8px auto;
-      max-width: 90%;
-      width: 480px;
+      margin: 16px auto;
+      width: 290px;
+      text-align: center;
     }
     h1 {
-      margin: 0 0 8px;
+      margin: 0 8px 8px;
       font-weight: normal;
       font-size: 30px;
     }
-    img {
+    small {
       display: block;
-      margin-bottom: 8px;
+      clear: both;
+      margin: 0 8px;
+    }
+    p,
+    pre {
+      margin: 16px 8px;
+    }
+    input {
+      -moz-box-sizing: border-box;
+           box-sizing: border-box;
+      padding: 7px 3px 7px 7px;
+      width: 274px;
+      border: 1px solid #ccc;
+      font-family: monospace, serif;
     }
     a {
       color: #000;
@@ -41,13 +55,37 @@
            -o-transition: none;
               transition: none;
     }
+    .pull-left {
+      float: left;
+    }
+    .pull-right {
+      float: right;
+    }
+    img,
+    canvas {
+      display: block;
+      margin-bottom: 8px;
+      padding: 8px;
+    }
   </style>
 </head>
-<body>
+<body ng-init="text='here comes qr!'">
 
   <h1>Angular QR Code</h1>
 
-  <qrcode>http://monospaced.com</qrcode>
+  <pre>&lt;qrcode&gt;&lt;/qrcode&gt;</pre>
+
+  <p><input type="text" ng-model="text" maxlength="26"></p>
+
+  <qrcode version="2" error-correction-level="M" size="274" text="{{text}}"></qrcode>
+
+  <qrcode version="2" error-correction-level="M" size="129" class="pull-left">{{text}}</qrcode>
+
+  <qrcode version="2" error-correction-level="M" size="129">here comes qr!</qrcode>
+
+  <qrcode class="pull-left">https://github.com/monospaced/angular-qrcode</qrcode>
+
+  <qrcode class="pull-right">http://monospaced.github.io/</qrcode>
 
   <small>
     <a href="https://github.com/monospaced/angular-qrcode">https://github.com/monospaced/angular-qrcode</a> <br>
@@ -55,7 +93,7 @@
   </small>
 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-  <script src="https://rawgithub.com/monospaced/bower-qrcode-generator/master/js/qrcode.js"></script>
+  <script src="//rawgithub.com/monospaced/bower-qrcode-generator/master/js/qrcode.js"></script>
   <script src="qrcode.js"></script>
 </body>
 </html>
