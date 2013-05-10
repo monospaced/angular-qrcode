@@ -8,7 +8,7 @@
     "components"
   ],
   "dependencies": {
-    "angular": "~1.0.6"
+    "angular": "~1.0.6",
     "monospaced/bower-qrcode-generator": "~0.0.0"
   }
 }
