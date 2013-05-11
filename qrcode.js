@@ -32,7 +32,6 @@ angular.module('monospaced.qrcode', [])
       compile: function(element, attrs, transclude){
         var domElement = element[0],
             canvas = element.find('canvas')[0],
-            context = canvas.getContext('2d'),
             version = Math.max(1, Math.min(parseInt(attrs.version, 10), 10)) || 4,
             correction = attrs.errorCorrectionLevel in levels ? attrs.errorCorrectionLevel : 'M',
             trim = /^\s+|\s+$/g,
@@ -53,7 +52,10 @@ angular.module('monospaced.qrcode', [])
               }
             };
 
-        canvas.width = canvas.height = size;
+        if (canvas2D) {
+          var context = canvas.getContext('2d');
+          canvas.width = canvas.height = size;
+        }
 
         if (!attrs.text) {
 
