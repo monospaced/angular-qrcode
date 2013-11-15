@@ -72,23 +72,23 @@
     }
   </style>
 </head>
-<body ng-init="text='here comes qr!'">
+<body ng-init="foo='here comes qr!'">
 
   <h1>Angular QR Code</h1>
 
   <pre>&lt;qrcode&gt;&lt;/qrcode&gt;</pre>
 
-  <p><input type="text" ng-model="text" maxlength="26"></p>
+  <p><input type="text" ng-model="foo" maxlength="26"></p>
 
-  <qrcode version="2" error-correction-level="M" size="274" text="{{text}}"></qrcode>
+  <qrcode version="2" error-correction-level="M" size="274" data="{{foo}}"></qrcode>
 
-  <qrcode version="2" error-correction-level="M" size="129" class="pull-left">{{text}}</qrcode>
+  <qrcode version="2" error-correction-level="M" size="129" class="pull-left" data="here comes qr!"></qrcode>
 
-  <qrcode version="2" error-correction-level="M" size="129">here comes qr!</qrcode>
+  <qrcode version="2" error-correction-level="M" size="129" data="here comes qr!"></qrcode>
 
-  <qrcode class="pull-left">https://github.com/monospaced/angular-qrcode</qrcode>
+  <qrcode class="pull-left" data="https://github.com/monospaced/angular-qrcode"></qrcode>
 
-  <qrcode class="pull-right">http://monospaced.github.io/</qrcode>
+  <qrcode class="pull-right" data="http://monospaced.github.io/"></qrcode>
 
   <small>
     <a href="https://github.com/monospaced/angular-qrcode">https://github.com/monospaced/angular-qrcode</a> <br>

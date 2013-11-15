@@ -12,19 +12,15 @@ Usage
 
 as element
 
-    <qrcode>string</qrcode>
+    <qrcode data="string"></qrcode>
 
 with options
 
-    <qrcode version="2" error-correction-level="M" size="200">string</qrcode>
-
-with expression, compile once
-
-    <qrcode>{{var}}</qrcode>
+    <qrcode version="2" error-correction-level="M" size="200" data="string"></qrcode>
 
 with expression, observe changes
 
-    <qrcode text="{{var}}"></qrcode>
+    <qrcode data="{{var}}"></qrcode>
 
 Options
 -------

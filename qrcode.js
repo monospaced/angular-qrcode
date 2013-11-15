@@ -1,5 +1,5 @@
 /*
- * angular-qrcode v1.1.0
+ * angular-qrcode v2.0.0
  * (c) 2013 Monospaced http://monospaced.com
  * License: MIT
  */
@@ -28,8 +28,8 @@ angular.module('monospaced.qrcode', [])
     return {
       restrict: 'E',
       template: '<canvas></canvas>',
-      transclude: true,
-      compile: function(element, attrs, transclude){
+      link: function(scope, element, attrs){
+
         var domElement = element[0],
             canvas = element.find('canvas')[0],
             version = Math.max(1, Math.min(parseInt(attrs.version, 10), 10)) || 4,
@@ -57,26 +57,14 @@ angular.module('monospaced.qrcode', [])
           canvas.width = canvas.height = size;
         }
 
-        if (!attrs.text) {
-
-          return function(scope, element, attrs){
-            transclude(scope, function(clone){
-              $timeout(function(){
-                var text = clone.text().replace(trim, '');
-                render(qr, text);
-              });
-            });
-          };
-
-        } else {
-
-          attrs.$observe('text', function(value){
-            var text = value.replace(trim, ''),
-                qr = qrcode(version, correction);
-            render(qr, text);
-          });
-
-        }
+        attrs.$observe('data', function(value){
+          if (!value) {
+            return;
+          }
+          var text = value.replace(trim, ''),
+              qr = qrcode(version, correction);
+          render(qr, text);
+        });
       }
     };
   }]);
