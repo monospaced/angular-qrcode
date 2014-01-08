@@ -16,13 +16,18 @@
     }
     body {
       margin: 16px auto;
-      width: 290px;
+      width: 1024px;
       text-align: center;
     }
     h1 {
       margin: 0 8px 8px;
       font-weight: normal;
       font-size: 30px;
+    }
+    h6 {
+      margin: 0 8px 8px;
+      font-weight: normal;
+      font-size: 8px;
     }
     small {
       display: block;
@@ -58,6 +63,10 @@
            -o-transition: none;
               transition: none;
     }
+    .qr-primary canvas {
+      margin-left: auto;
+      margin-right: auto;
+    }
     .pull-left {
       float: left;
     }
@@ -72,23 +81,28 @@
     }
   </style>
 </head>
-<body ng-init="foo='here comes qr!'">
+<body ng-init="foo='here comes qr!'; size=780">
 
   <h1>Angular QR Code</h1>
 
   <pre>&lt;qrcode&gt;&lt;/qrcode&gt;</pre>
+  <h6>you need to zoom out a <u>lot</u></h6>
 
   <p><input type="text" ng-model="foo" maxlength="26"></p>
+  <p><input type="number" ng-model="size"></p>
+  <p>click inside the input and scrrroll!</p>
 
-  <qrcode version="2" error-correction-level="M" size="274" data="{{foo}}"></qrcode>
+  <span>
+  <qrcode class="qr-primary" version="2" error-correction-level="M" size="{{size}}" data="{{foo}}"></qrcode>
 
-  <qrcode version="2" error-correction-level="M" size="129" class="pull-left" data="here comes qr!"></qrcode>
+  <qrcode class="pull-left" version="2" error-correction-level="M" size="{{size / 2}}" data="here comes qr!"></qrcode>
 
-  <qrcode version="2" error-correction-level="M" size="129" data="here comes qr!"></qrcode>
+  <qrcode class="pull-right" version="2" error-correction-level="M" size="{{size / 2}}" data="here comes qr!"></qrcode>
 
-  <qrcode class="pull-left" data="https://github.com/monospaced/angular-qrcode"></qrcode>
+  <qrcode class="pull-left" size="{{size / 4}}" data="https://github.com/monospaced/angular-qrcode"></qrcode>
 
-  <qrcode class="pull-right" data="http://monospaced.github.io/"></qrcode>
+  <qrcode class="pull-right" size="{{size / 4}}" data="http://monospaced.github.io/"></qrcode>
+  </span>
 
   <small>
     <a href="https://github.com/monospaced/angular-qrcode">https://github.com/monospaced/angular-qrcode</a> <br>
