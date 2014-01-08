@@ -29,72 +29,91 @@ angular.module('monospaced.qrcode', [])
       restrict: 'E',
       template: '<canvas></canvas>',
       link: function(scope, element, attrs){
-        // dynamic stuff
-        var size, tile;
-        var text;
-        var qr, modules;
 
-        // fixed for the life of the scope
         var domElement = element[0],
             canvas = element.find('canvas')[0],
-            version = Math.max(1, Math.min(parseInt(attrs.version, 10), 10)) || 4,
-            correction = attrs.errorCorrectionLevel in levels ? attrs.errorCorrectionLevel : 'M',
-            trim = /^\s+|\s+$/g;
+            context = canvas2D ? canvas.getContext('2d') : null,
+            trim = /^\s+|\s+$/g,
+            rendered = false,
+            version,
+            errorCorrectionLevel,
+            data,
+            size,
+            modules,
+            tile,
+            qr;
 
-        if (canvas2D) {
-          var context = canvas.getContext('2d');
-        }
-
-        var render = function() {
-          if (canvas2D) {
-            draw(context, qr, modules, tile);
-          } else {
-            domElement.innerHTML = qr.createImgTag(tile, 0);
-          }
-        };
-
-        var updateText = function(value) {
-          text = value;
-          qr = qrcode(version, correction);
-          if (typeof text !== 'undefined') {
-            qr.addData(text);
-          }
-          qr.make();
-          if (typeof modules === 'undefined') {
+        var setVersion = function(value) {
+              version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
+            },
+            setErrorCorrectionLevel = function(value) {
+              errorCorrectionLevel = value in levels ? value : 'M';
+            },
+            setData = function(value) {
+              if (!value) {
+                return;
+              }
+              data = value.replace(trim, '');
+              qr = qrcode(version, errorCorrectionLevel);
+              qr.addData(data);
+              qr.make();
               modules = qr.getModuleCount();
+            },
+            setSize = function(value) {
+              size = parseInt(value, 10) || modules * 2;
+              tile = size / modules;
+              canvas.width = canvas.height = size;
+            },
+            render = function() {
+              if (canvas2D) {
+                draw(context, qr, modules, tile);
+              } else {
+                domElement.innerHTML = qr.createImgTag(tile, 0);
+              }
+              rendered = true;
+            };
+
+        setVersion(attrs.version);
+        setErrorCorrectionLevel(attrs.errorCorrectionLevel);
+        setSize(attrs.size);
+
+        attrs.$observe('version', function(value) {
+          if (!value) {
+            return;
           }
-        };
+          setVersion(value);
+          setData(data);
+          setSize(size);
+          render();
+        });
 
-        var updateSize = function(value) {
-          var minSize = modules * 2;
-
-          if (typeof value === 'string') {
-            value = parseInt(value, 10);
+        attrs.$observe('errorCorrectionLevel', function(value) {
+          if (!value) {
+            return;
           }
-          value = value || minSize;
-
-          size = value;
-          tile = size / modules;
-          if (canvas2D) {
-            canvas.width = canvas.height = size;
-          }
-        };
-
-        updateText();
-        updateSize(attrs.size);
-
-        attrs.$observe('size', function(value) {
-            updateSize(value);
-            render();
+          setErrorCorrectionLevel(value);
+          setData(data);
+          setSize(size);
+          render();
         });
 
         attrs.$observe('data', function(value) {
-          if (value) {
-              value = value.replace(trim, '');
+          if (!value) {
+            return;
           }
-          updateText(value);
+          setData(value);
+          setSize(size);
           render();
         });
+
+        attrs.$observe('size', function(value) {
+          if (!value) {
+            return;
+          }
+          setSize(value);
+          render();
+        });
+
       }
     };
   }]);
