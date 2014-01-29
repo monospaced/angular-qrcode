@@ -18,9 +18,9 @@ with options
 
     <qrcode version="2" error-correction-level="M" size="200" data="string"></qrcode>
 
-with expression, observe changes
+with expressions, observe changes
 
-    <qrcode data="{{var}}"></qrcode>
+    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}"></qrcode>
 
 Options
 -------
