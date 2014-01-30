@@ -65,6 +65,7 @@
            box-sizing: border-box;
       width: 204px;
       height: 34px;
+      padding: 7px 3px 7px 7px;
       border: 1px solid #ccc;
     }
     a {
@@ -120,7 +121,7 @@
   <form>
     <p>
       <label for="data">Data</label>
-      <textarea id="data" data-ng-model="foo"></textarea>
+      <textarea id="data" data-ng-model="foo" maxlength="2953"></textarea>
     </p>
     <p>
       <label for="size">Size</label>
@@ -128,7 +129,7 @@
     </p>
     <p>
       <label for="version">Version</label>
-      <input id="version" type="number" data-ng-model="v" min="1" max="10">
+      <input id="version" type="number" data-ng-model="v" min="1" max="40">
     </p>
     <p>
       <label for="level" title="Error Correction Level">Level</label>
