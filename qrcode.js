@@ -29,10 +29,12 @@ angular.module('monospaced.qrcode', [])
 
     return {
       restrict: 'E',
-      template: '<canvas></canvas>',
+      template: '<a class="qrcode" style="display: table;"><canvas style="' +
+                'display: block; max-width: 100%;"></canvas></a>',
       link: function(scope, element, attrs) {
         var domElement = element[0],
             canvas = element.find('canvas')[0],
+            link = element.find('a')[0],
             context = canvas2D ? canvas.getContext('2d') : null,
             trim = /^\s+|\s+$/g,
             error,
@@ -89,6 +91,8 @@ angular.module('monospaced.qrcode', [])
 
               if (canvas2D) {
                 draw(context, qr, modules, tile);
+                link.download = 'qrcode.png';
+                link.href = canvas.toDataURL('image/png');
               } else {
                 domElement.innerHTML = qr.createImgTag(tile, 0);
               }
