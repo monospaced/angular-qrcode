@@ -81,9 +81,15 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (error) {
-                if (!canvas2D) {
+                if (canvas2D) {
+                  link.download = '';
+                  link.href = '';
+                } else {
                   domElement.innerHTML = '<img src width="' + size + '"' +
-                                         'height="' + size + '">';
+                                         'height="' + size + '"' +
+                                         'class="qrcode"' +
+                                         'style="display: block;' +
+                                         'max-width: 100%;">';
                 }
                 scope.$emit('qrcode:error', error);
                 return;
@@ -95,6 +101,12 @@ angular.module('monospaced.qrcode', [])
                 link.href = canvas.toDataURL('image/png');
               } else {
                 domElement.innerHTML = qr.createImgTag(tile, 0);
+                element.find('img')
+                  .addClass('qrcode')
+                  .css({
+                    'display': 'block',
+                    'max-width': '100%'
+                  });
               }
             };
 
