@@ -23,6 +23,11 @@
       font-weight: normal;
       font-size: 30px;
     }
+    h2 {
+      margin: 24px 8px;
+      font-weight: normal;
+      font-size: 24px;
+    }
     small {
       display: block;
       clear: both;
@@ -30,8 +35,8 @@
     }
     p,
     pre {
-      margin: 16px 0;
       overflow: hidden;
+      margin: 16px 0;
     }
     form {
       margin: 0 auto 8px;
@@ -63,9 +68,9 @@
       float: right;
       -moz-box-sizing: border-box;
            box-sizing: border-box;
+      padding: 7px 3px 7px 7px;
       width: 204px;
       height: 34px;
-      padding: 7px 3px 7px 7px;
       border: 1px solid #ccc;
     }
     a {
@@ -86,25 +91,24 @@
               transition: none;
     }
     .qrcode {
+      display: block;
+      margin: 24px auto 16px;
+      max-width: 100%;
+    }
+    .qrcode-link {
+      display: table;
       margin: 24px auto 16px;
     }
+    .qrcode-link .qrcode {
+      margin: 0;
+    }
     .footer {
-      margin: 0 auto;
+      margin: 16px auto;
       width: 290px;
-    }
-    .footer .qrcode {
-      margin: 0 0 8px;
-      padding: 8px;
-    }
-    .pull-left {
-      float: left;
-    }
-    .pull-right {
-      float: right;
     }
   </style>
 </head>
-<body data-ng-init="foo='here comes qr!';v=3;e='M';s=274;">
+<body data-ng-init="foo='here comes qr!';bar='https://github.com/monospaced/angular-qrcode';v=4;e='M';s=274;">
 
   <h1>Angular QR Code</h1>
 
@@ -131,18 +135,24 @@
     </p>
   </form>
 
+  <h2>Downloadable</h2>
+
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" download></qrcode>
+
+  <h2>Linked</h2>
+
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{bar}}" href="{{bar}}"></qrcode>
+
+  <form>
+    <p>
+      <label for="data">Data</label>
+      <textarea id="data" data-ng-model="bar" maxlength="2953"></textarea>
+    </p>
+  </form>
+
   <div class="footer">
 
-    <qrcode version="2" error-correction-level="M" size="129" class="pull-left" data="here comes qr!"></qrcode>
-
-    <qrcode version="2" error-correction-level="M" size="129" data="here comes qr!"></qrcode>
-
-    <qrcode class="pull-left" data="https://github.com/monospaced/angular-qrcode"></qrcode>
-
-    <qrcode class="pull-right" data="http://monospaced.github.io/"></qrcode>
-
     <small>
-      <a href="https://github.com/monospaced/angular-qrcode">https://github.com/monospaced/angular-qrcode</a> <br>
       <a href="http://monospaced.github.io/">Monospaced Labs</a>
     </small>
 

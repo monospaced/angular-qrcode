@@ -14,13 +14,23 @@ as element
 
     <qrcode data="string"></qrcode>
 
-with options
+with QR options
 
     <qrcode version="2" error-correction-level="M" size="200" data="string"></qrcode>
 
+as a downloadable image
+
+    <qrcode data="string" download></qrcode>
+
+as a link to URL
+
+    <qrcode data="http://example.com" href="http://example.com"></qrcode>
+
+`download` and `href` can’t be used on the same element (if `download` is present, `href` will be ignored)
+
 with expressions, observe changes
 
-    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}"></qrcode>
+    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}} href={{var}} download"></qrcode>
 
 Options
 -------
@@ -32,6 +42,10 @@ Permitted values
 * error-correction-level: 'L', 'M', 'Q', 'H'
 
 * size: integer
+
+* download: boolean
+
+* href: URL
 
 The amount of data (measured in bits) must be within capacity according to the selected version and error correction level, see http://www.qrcode.com/en/about/version.html.
 
