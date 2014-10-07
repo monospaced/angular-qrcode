@@ -1,5 +1,5 @@
 /*
- * angular-qrcode v5.0.1
+ * angular-qrcode v5.0.2
  * (c) 2013 Monospaced http://monospaced.com
  * License: MIT
  */
@@ -31,7 +31,6 @@ angular.module('monospaced.qrcode', [])
       restrict: 'E',
       template: '<canvas class="qrcode"></canvas>',
       link: function(scope, element, attrs) {
-        console.log(attrs);
         var domElement = element[0],
             $canvas = element.find('canvas'),
             canvas = $canvas[0],
