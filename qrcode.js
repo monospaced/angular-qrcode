@@ -7,7 +7,7 @@
 angular.module('monospaced.qrcode', [])
   .directive('qrcode', ['$window', function($window) {
 
-    var canvas2D = !$window.CanvasRenderingContext2D,
+    var canvas2D = !!$window.CanvasRenderingContext2D,
         levels = {
           'L': 'Low',
           'M': 'Medium',
