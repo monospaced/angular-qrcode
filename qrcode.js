@@ -85,6 +85,11 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (error) {
+                if (link) {
+                  link.removeAttribute('download');
+                  link.title = '';
+                  link.href = '#_';
+                }
                 if (!canvas2D) {
                   domElement.innerHTML = '<img src width="' + size + '"' +
                                          'height="' + size + '"' +
@@ -92,6 +97,11 @@ angular.module('monospaced.qrcode', [])
                 }
                 scope.$emit('qrcode:error', error);
                 return;
+              }
+
+              if (download) {
+                domElement.download = 'qrcode.png';
+                domElement.title = 'Download QR code';
               }
 
               if (canvas2D) {
@@ -121,11 +131,6 @@ angular.module('monospaced.qrcode', [])
           link.className = 'qrcode-link';
           $canvas.wrap(link);
           domElement = link;
-
-          if (download) {
-            domElement.download = 'qrcode.png';
-            domElement.title = 'Download QR code';
-          }
         }
 
         setVersion(attrs.version);
