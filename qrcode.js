@@ -143,8 +143,12 @@ angular.module('monospaced.qrcode', [])
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
         setSize(attrs.size);
-        setLightColor(attrs.light);
-        setDarkColor(attrs.dark);
+        setLightColor(attrs.light || '#FFF');
+        setDarkColor(attrs.dark || '#000');
+
+        attrs.$observe('light', setLightColor);
+
+        attrs.$observe('dark', setDarkColor);
 
         attrs.$observe('version', function(value) {
           if (!value) {
