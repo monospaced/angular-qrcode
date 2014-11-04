@@ -14,13 +14,13 @@ angular.module('monospaced.qrcode', [])
           'Q': 'Quartile',
           'H': 'High'
         },
-        draw = function(context, qr, modules, tile) {
+        draw = function(context, qr, modules, tile, darkColor, lightColor) {
           for (var row = 0; row < modules; row++) {
             for (var col = 0; col < modules; col++) {
               var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
                   h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
 
-              context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+              context.fillStyle = qr.isDark(row, col) ? darkColor : lightColor;
               context.fillRect(Math.round(col * tile),
                                Math.round(row * tile), w, h);
             }
@@ -48,6 +48,8 @@ angular.module('monospaced.qrcode', [])
             tile,
             qr,
             $img,
+            darkColor,
+            lightColor,
             setVersion = function(value) {
               version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
             },
@@ -72,6 +74,12 @@ angular.module('monospaced.qrcode', [])
 
               error = false;
               modules = qr.getModuleCount();
+            },
+            setLightColor = function(value) {
+              lightColor = value;
+            },
+            setDarkColor = function(value) {
+              darkColor = value;
             },
             setSize = function(value) {
               size = parseInt(value, 10) || modules * 2;
@@ -104,7 +112,7 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (canvas2D) {
-                draw(context, qr, modules, tile);
+                draw(context, qr, modules, tile, darkColor, lightColor);
 
                 if (download) {
                   domElement.href = canvas.toDataURL('image/png');
@@ -135,6 +143,12 @@ angular.module('monospaced.qrcode', [])
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
         setSize(attrs.size);
+        setLightColor(attrs.light || '#FFF');
+        setDarkColor(attrs.dark || '#000');
+
+        attrs.$observe('light', setLightColor);
+
+        attrs.$observe('dark', setDarkColor);
 
         attrs.$observe('version', function(value) {
           if (!value) {
