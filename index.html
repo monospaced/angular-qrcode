@@ -108,13 +108,13 @@
     }
   </style>
 </head>
-<body data-ng-init="foo='here comes qr!';bar='https://github.com/monospaced/angular-qrcode';v=4;e='M';s=274;">
+<body data-ng-init="foo='here comes qr!';bar='https://github.com/monospaced/angular-qrcode';v=4;e='M';s=274;m=0;">
 
   <h1>Angular QR Code</h1>
 
   <pre>&lt;qrcode&gt;&lt;/qrcode&gt;</pre>
 
-  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}"></qrcode>
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" margin="{{m}}"></qrcode>
 
   <form>
     <p>
@@ -133,15 +133,19 @@
       <label for="level" title="Error Correction Level">Level</label>
       <select id="level" data-ng-model="e" data-ng-options="option.version as option.name for option in [{name:'Low', version:'L'},{name:'Medium', version:'M'},{name:'Quartile', version:'Q'},{name:'High', version:'H'}]"></select>
     </p>
+    <p>
+      <label for="margin">Margin</label>
+      <input id="margin" type="number" data-ng-model="m" min="0" max="50">
+    </p>
   </form>
 
   <h2>Downloadable</h2>
 
-  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" download></qrcode>
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" margin="{{m}}" download></qrcode>
 
   <h2>Linked</h2>
 
-  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{bar}}" href="{{bar}}"></qrcode>
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{bar}}" margin="{{m}}" href="{{bar}}"></qrcode>
 
   <form>
     <p>
