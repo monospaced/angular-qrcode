@@ -5,186 +5,186 @@
  */
 
 angular.module('monospaced.qrcode', [])
-    .directive('qrcode', ['$window', function($window) {
+  .directive('qrcode', ['$window', function($window) {
 
-        var canvas2D = !!$window.CanvasRenderingContext2D,
-            levels = {
-                'L': 'Low',
-                'M': 'Medium',
-                'Q': 'Quartile',
-                'H': 'High'
+    var canvas2D = !!$window.CanvasRenderingContext2D,
+        levels = {
+          'L': 'Low',
+          'M': 'Medium',
+          'Q': 'Quartile',
+          'H': 'High'
+        },
+        draw = function(context, qr, modules, tile) {
+          for (var row = 0; row < modules; row++) {
+            for (var col = 0; col < modules; col++) {
+              var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
+                  h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
+
+              context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+              context.fillRect(Math.round(col * tile),
+                               Math.round(row * tile), w, h);
+            }
+          }
+        };
+
+    return {
+      restrict: 'E',
+      template: '<canvas class="qrcode"></canvas>',
+      link: function(scope, element, attrs) {
+        var domElement = element[0],
+            $canvas = element.find('canvas'),
+            canvas = $canvas[0],
+            context = canvas2D ? canvas.getContext('2d') : null,
+            download = 'download' in attrs,
+            href = attrs.href,
+            link = download || href ? document.createElement('a') : '',
+            trim = /^\s+|\s+$/g,
+            error,
+            version,
+            errorCorrectionLevel,
+            data,
+            size,
+            modules,
+            tile,
+            qr,
+            $img,
+            setVersion = function(value) {
+              version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
             },
-            draw = function(context, qr, modules, tile) {
-                for (var row = 0; row < modules; row++) {
-                    for (var col = 0; col < modules; col++) {
-                        var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
-                            h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
+            setErrorCorrectionLevel = function(value) {
+              errorCorrectionLevel = value in levels ? value : 'M';
+            },
+            setData = function(value) {
+              if (!value) {
+                return;
+              }
 
-                        context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
-                        context.fillRect(Math.round(col * tile),
-                            Math.round(row * tile), w, h);
-                    }
+              data = value.replace(trim, '');
+              qr = qrcode(version, errorCorrectionLevel);
+              qr.addData(data);
+
+              try {
+                qr.make();
+              } catch(e) {
+                error = e.message;
+                return;
+              }
+
+              error = false;
+              modules = qr.getModuleCount();
+            },
+            setSize = function(value) {
+              size = parseInt(value, 10) || modules * 2;
+              tile = size / modules;
+              canvas.width = canvas.height = size;
+            },
+            render = function() {
+              if (!qr) {
+                return;
+              }
+
+              if (error) {
+                if (link) {
+                  link.removeAttribute('download');
+                  link.title = '';
+                  link.href = '#_';
                 }
+                if (!canvas2D) {
+                  element.find('a').innerHTML = '<img src width="' + size + '"' +
+                                         'height="' + size + '"' +
+                                         'class="qrcode">';
+                }
+                scope.$emit('qrcode:error', error);
+                return;
+              }
+
+              if (download) {
+                element.find('a').download = 'qrcode.png';
+                element.find('a').title = 'Download QR code';
+              }
+
+              if (canvas2D) {
+                draw(context, qr, modules, tile);
+
+                if (download) {
+                  element.find('a').href = canvas.toDataURL('image/png');
+                  return;
+                }
+              } else {
+                  element.find('a').innerHTML = qr.createImgTag(tile, 0);
+                $img = element.find('img');
+                $img.addClass('qrcode');
+
+                if (download) {
+                  element.find('a').href = $img[0].src;
+                  return;
+                }
+              }
+
+              if (href) {
+                element.find('a').href = href;
+              }
             };
 
-        return {
-            restrict: 'E',
-            template: '<canvas class="qrcode"></canvas>',
-            link: function(scope, element, attrs) {
-                var domElement = element[0],
-                    $canvas = element.find('canvas'),
-                    canvas = $canvas[0],
-                    context = canvas2D ? canvas.getContext('2d') : null,
-                    download = 'download' in attrs,
-                    href = attrs.href,
-                    link = download || href ? document.createElement('a') : '',
-                    trim = /^\s+|\s+$/g,
-                    error,
-                    version,
-                    errorCorrectionLevel,
-                    data,
-                    size,
-                    modules,
-                    tile,
-                    qr,
-                    $img,
-                    setVersion = function(value) {
-                        version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
-                    },
-                    setErrorCorrectionLevel = function(value) {
-                        errorCorrectionLevel = value in levels ? value : 'M';
-                    },
-                    setData = function(value) {
-                        if (!value) {
-                            return;
-                        }
+        if (link) {
+          link.className = 'qrcode-link';
+          $canvas.wrap(link);
+          domElement = link;
+        }
 
-                        data = value.replace(trim, '');
-                        qr = qrcode(version, errorCorrectionLevel);
-                        qr.addData(data);
+        setVersion(attrs.version);
+        setErrorCorrectionLevel(attrs.errorCorrectionLevel);
+        setSize(attrs.size);
 
-                        try {
-                            qr.make();
-                        } catch(e) {
-                            error = e.message;
-                            return;
-                        }
+        attrs.$observe('version', function(value) {
+          if (!value) {
+            return;
+          }
 
-                        error = false;
-                        modules = qr.getModuleCount();
-                    },
-                    setSize = function(value) {
-                        size = parseInt(value, 10) || modules * 2;
-                        tile = size / modules;
-                        canvas.width = canvas.height = size;
-                    },
-                    render = function() {
-                        if (!qr) {
-                            return;
-                        }
+          setVersion(value);
+          setData(data);
+          setSize(size);
+          render();
+        });
 
-                        if (error) {
-                            if (link) {
-                                link.removeAttribute('download');
-                                link.title = '';
-                                link.href = '#_';
-                            }
-                            if (!canvas2D) {
-                                element.find('a').innerHTML = '<img src width="' + size + '"' +
-                                    'height="' + size + '"' +
-                                    'class="qrcode">';
-                            }
-                            scope.$emit('qrcode:error', error);
-                            return;
-                        }
+        attrs.$observe('errorCorrectionLevel', function(value) {
+          if (!value) {
+            return;
+          }
 
-                        if (download) {
-                            element.find('a').download = 'qrcode.png';
-                            element.find('a').title = 'Download QR code';
-                        }
+          setErrorCorrectionLevel(value);
+          setData(data);
+          setSize(size);
+          render();
+        });
 
-                        if (canvas2D) {
-                            draw(context, qr, modules, tile);
+        attrs.$observe('data', function(value) {
+          if (!value) {
+            return;
+          }
 
-                            if (download) {
-                                element.find('a').href = canvas.toDataURL('image/png');
-                                return;
-                            }
-                        } else {
-                            element.find('a').innerHTML = qr.createImgTag(tile, 0);
-                            $img = element.find('img');
-                            $img.addClass('qrcode');
+          setData(value);
+          setSize(size);
+          render();
+        });
 
-                            if (download) {
-                                element.find('a').href = $img[0].src;
-                                return;
-                            }
-                        }
+        attrs.$observe('size', function(value) {
+          if (!value) {
+            return;
+          }
 
-                        if (href) {
-                            element.find('a').href = href;
-                        }
-                    };
+          setSize(value);
+          render();
+        });
 
-                if (link) {
-                    link.className = 'qrcode-link';
-                    $canvas.wrap(link);
-                    domElement = link;
-                }
+        attrs.$observe('href', function(value) {
+          if (!value) {
+            return;
+          }
 
-                setVersion(attrs.version);
-                setErrorCorrectionLevel(attrs.errorCorrectionLevel);
-                setSize(attrs.size);
-
-                attrs.$observe('version', function(value) {
-                    if (!value) {
-                        return;
-                    }
-
-                    setVersion(value);
-                    setData(data);
-                    setSize(size);
-                    render();
-                });
-
-                attrs.$observe('errorCorrectionLevel', function(value) {
-                    if (!value) {
-                        return;
-                    }
-
-                    setErrorCorrectionLevel(value);
-                    setData(data);
-                    setSize(size);
-                    render();
-                });
-
-                attrs.$observe('data', function(value) {
-                    if (!value) {
-                        return;
-                    }
-
-                    setData(value);
-                    setSize(size);
-                    render();
-                });
-
-                attrs.$observe('size', function(value) {
-                    if (!value) {
-                        return;
-                    }
-
-                    setSize(value);
-                    render();
-                });
-
-                attrs.$observe('href', function(value) {
-                    if (!value) {
-                        return;
-                    }
-
-                    href = value;
-                    render();
-                });
-            }
-        };
-    }]);
+          href = value;
+          render();
+        });
+      }
+    };
+  }]);
