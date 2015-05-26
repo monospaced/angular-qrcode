@@ -90,7 +90,7 @@ angular.module('monospaced.qrcode', [])
                   link.href = '#_';
                 }
                 if (!canvas2D) {
-                  element.find('a.qrcode-link').innerHTML = '<img src width="' + size + '"' +
+                  domElement.innerHTML = '<img src width="' + size + '"' +
                                          'height="' + size + '"' +
                                          'class="qrcode">';
                 }
@@ -99,37 +99,37 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (download) {
-                element.find('a.qrcode-link').download = 'qrcode.png';
-                element.find('a.qrcode-link').title = 'Download QR code';
+                domElement.download = 'qrcode.png';
+                domElement.title = 'Download QR code';
               }
 
               if (canvas2D) {
                 draw(context, qr, modules, tile);
 
                 if (download) {
-                  element.find('a.qrcode-link').href = canvas.toDataURL('image/png');
+                  domElement.href = canvas.toDataURL('image/png');
                   return;
                 }
               } else {
-                  element.find('a.qrcode-link').innerHTML = qr.createImgTag(tile, 0);
+                domElement.innerHTML = qr.createImgTag(tile, 0);
                 $img = element.find('img');
                 $img.addClass('qrcode');
 
                 if (download) {
-                  element.find('a.qrcode-link').href = $img[0].src;
+                  domElement.href = $img[0].src;
                   return;
                 }
               }
 
               if (href) {
-                element.find('a.qrcode-link').href = href;
+                domElement.href = href;
               }
             };
 
         if (link) {
           link.className = 'qrcode-link';
           $canvas.wrap(link);
-          domElement = link;
+          domElement = element.find('a.qrcode-link')[0];
         }
 
         setVersion(attrs.version);
