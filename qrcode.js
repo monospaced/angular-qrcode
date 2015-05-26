@@ -129,7 +129,7 @@ angular.module('monospaced.qrcode', [])
         if (link) {
           link.className = 'qrcode-link';
           $canvas.wrap(link);
-          domElement = link;
+          domElement = element.find('a.qrcode-link')[0];
         }
 
         setVersion(attrs.version);
