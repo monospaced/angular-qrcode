@@ -122,7 +122,7 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (href) {
-                element.find('a').href = href;
+                element.find('a.qrcode-link').href = href;
               }
             };
 
