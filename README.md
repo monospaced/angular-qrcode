@@ -54,7 +54,7 @@ Install
 
     bower install monospaced/angular-qrcode
 
-Include the [qrcode generator library](https://raw.github.com/monospaced/bower-qrcode-generator/master/js/qrcode.js) and the `qrcode.js` script provided by this component in your app, and add `monospaced.qrcode` to your app’s dependencies.
+Include the [qrcode generator library](https://raw.github.com/monospaced/bower-qrcode-generator/master/js/qrcode.js) and the `angular-qrcode.js` script provided by this component in your app, and add `monospaced.qrcode` to your app’s dependencies.
 
 Demo
 ----------------
