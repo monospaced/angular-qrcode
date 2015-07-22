@@ -65,8 +65,12 @@ angular.module('monospaced.qrcode', [])
 
               try {
                 qr.make();
-              } catch(e) {
-                error = e.message;
+              } catch (e) {
+                if (version >= 10) {
+                  throw "Data is too long";
+                }
+                setVersion(version + 1);
+                setData(value);
                 return;
               }
 
@@ -120,14 +124,14 @@ angular.module('monospaced.qrcode', [])
                   return;
                 }
               }
-
-              if (href) {
-                domElement.href = href;
-              }
             };
 
         if (link) {
           link.className = 'qrcode-link';
+          link.href = href;
+          if (target) {
+            link.target = target;
+          }
           $canvas.wrap(link);
           domElement = link;
         }
