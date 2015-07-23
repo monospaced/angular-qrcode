@@ -37,7 +37,7 @@ angular.module('monospaced.qrcode', [])
             context = canvas2D ? canvas.getContext('2d') : null,
             download = 'download' in attrs,
             href = attrs.href,
-            target = attrs.target;
+            target = attrs.target,
             link = download || href ? document.createElement('a') : '',
             trim = /^\s+|\s+$/g,
             error,
