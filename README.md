@@ -30,7 +30,7 @@ as a link to URL
 
 with expressions, observe changes
 
-    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}} href={{var}} download"></qrcode>
+    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}" href="{{var}}" download></qrcode>
 
 Options
 -------
