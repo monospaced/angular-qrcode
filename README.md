@@ -18,6 +18,10 @@ with QR options
 
     <qrcode version="2" error-correction-level="M" size="200" data="string"></qrcode>
 
+with custom color and background
+
+    <qrcode data="string" color="#ff0000" background="#cccccc"></qrcode>
+
 as a downloadable image
 
     <qrcode data="string" download></qrcode>
@@ -30,7 +34,7 @@ as a link to URL
 
 with expressions, observe changes
 
-    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}" href="{{var}}" download></qrcode>
+    <qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}" href="{{var}}" color="{{col}}" background="{{bg}}" download></qrcode>
 
 Options
 -------
@@ -46,6 +50,10 @@ Permitted values
 * download: boolean
 
 * href: URL
+
+* color: color in HEX (with hash prefix)
+
+* background: color in HEX (with hash prefix)
 
 The amount of data (measured in bits) must be within capacity according to the selected version and error correction level, see http://www.qrcode.com/en/about/version.html.
 

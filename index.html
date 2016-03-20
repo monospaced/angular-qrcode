@@ -40,13 +40,13 @@
     }
     form {
       margin: 0 auto 8px;
-      width: 274px;
+      width: 294px;
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
     }
     label {
       float: left;
-      width: 60px;
+      width: 80px;
       color: #888;
       text-align: left;
       line-height: 2.125;
@@ -108,13 +108,13 @@
     }
   </style>
 </head>
-<body data-ng-init="foo='here comes qr!';bar='https://github.com/monospaced/angular-qrcode';v=4;e='M';s=274;">
+<body data-ng-init="foo='here comes qr!';bar='https://github.com/monospaced/angular-qrcode';v=4;e='M';s=274;c='#000000';b='#ffffff'">
 
   <h1>Angular QR Code</h1>
 
   <pre>&lt;qrcode&gt;&lt;/qrcode&gt;</pre>
 
-  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}"></qrcode>
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" color="{{c}}" background="{{b}}"></qrcode>
 
   <form>
     <p>
@@ -133,15 +133,23 @@
       <label for="level" title="Error Correction Level">Level</label>
       <select id="level" data-ng-model="e" data-ng-options="option.version as option.name for option in [{name:'Low', version:'L'},{name:'Medium', version:'M'},{name:'Quartile', version:'Q'},{name:'High', version:'H'}]"></select>
     </p>
+    <p>
+      <label for="version">Color</label>
+      <input id="version" type="text" data-ng-model="c">
+    </p>
+    <p>
+      <label for="version">Background</label>
+      <input id="version" type="text" data-ng-model="b">
+    </p>
   </form>
 
   <h2>Downloadable</h2>
 
-  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" download></qrcode>
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" color="{{c}}" background="{{b}}" download></qrcode>
 
   <h2>Linked</h2>
 
-  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{bar}}" href="{{bar}}"></qrcode>
+  <qrcode version="{{v}}" error-correction-level="{{e}}" size="{{s}}" data="{{bar}}" color="{{c}}" background="{{b}}" href="{{bar}}"></qrcode>
 
   <form>
     <p>
