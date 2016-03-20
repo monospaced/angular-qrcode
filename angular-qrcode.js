@@ -14,13 +14,13 @@ angular.module('monospaced.qrcode', [])
           'Q': 'Quartile',
           'H': 'High'
         },
-        draw = function(context, qr, modules, tile) {
+        draw = function(context, qr, modules, tile, color, background) {
           for (var row = 0; row < modules; row++) {
             for (var col = 0; col < modules; col++) {
               var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
                   h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
 
-              context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+              context.fillStyle = qr.isDark(row, col) ? color : background;
               context.fillRect(Math.round(col * tile),
                                Math.round(row * tile), w, h);
             }
@@ -44,6 +44,8 @@ angular.module('monospaced.qrcode', [])
             errorCorrectionLevel,
             data,
             size,
+            color = '#000',
+            background = '#fff',
             modules,
             tile,
             qr,
@@ -78,6 +80,20 @@ angular.module('monospaced.qrcode', [])
               tile = size / modules;
               canvas.width = canvas.height = size;
             },
+            setColor = function(value) {
+              if (!value) {
+                return;
+              }
+
+              color = value.replace(trim, '');
+            },
+            setBackground = function(value) {
+              if (!value) {
+                return;
+              }
+
+              background = value.replace(trim, '');
+            },
             render = function() {
               if (!qr) {
                 return;
@@ -104,7 +120,7 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (canvas2D) {
-                draw(context, qr, modules, tile);
+                draw(context, qr, modules, tile, color, background);
 
                 if (download) {
                   domElement.href = canvas.toDataURL('image/png');
@@ -183,6 +199,24 @@ angular.module('monospaced.qrcode', [])
           }
 
           href = value;
+          render();
+        });
+
+        attrs.$observe('color', function(value) {
+          if (!value) {
+            return;
+          }
+
+          setColor(value);
+          render();
+        });
+
+        attrs.$observe('background', function(value) {
+          if (!value) {
+            return;
+          }
+
+          setBackground(value);
           render();
         });
       }
