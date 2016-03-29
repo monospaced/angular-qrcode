@@ -12,7 +12,7 @@ Important!
 
 The `version` and `error-correction-level` parameters are very important.
 
-Specifcally, the selected `version` and `error correction level` must give a high enough capacity for the amount of `data` (in bits) you are encoding, or the qrcode will not render.
+__The selected `version` and `error-correction-level` must give a high enough capacity for the amount of `data` (bits) you are encoding, or the `qrcode` will not render__.
 
 For more information see http://www.qrcode.com/en/about/version.html.
 
