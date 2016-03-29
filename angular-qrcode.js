@@ -49,7 +49,7 @@ angular.module('monospaced.qrcode', [])
             qr,
             $img,
             setVersion = function(value) {
-              version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
+              version = Math.max(1, Math.min(parseInt(value, 10), 40)) || 5;
             },
             setErrorCorrectionLevel = function(value) {
               errorCorrectionLevel = value in levels ? value : 'M';

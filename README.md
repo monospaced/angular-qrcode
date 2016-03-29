@@ -37,7 +37,7 @@ Options
 
 Permitted values
 
-* version: 1-10
+* version: 1-40
 
 * error-correction-level: 'L', 'M', 'Q', 'H'
 

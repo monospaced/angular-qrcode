@@ -9,6 +9,6 @@
   ],
   "dependencies": {
     "angular": ">=1.0.6",
-    "qrcode-generator": "git://github.com/monospaced/bower-qrcode-generator.git#0.0.2"
+    "qrcode-generator": "git://github.com/monospaced/bower-qrcode-generator.git#0.1.0"
   }
 }
