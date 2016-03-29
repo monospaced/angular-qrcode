@@ -1,5 +1,5 @@
 /*
- * angular-qrcode v6.1.3
+ * angular-qrcode v6.2.0
  * (c) 2013 Monospaced http://monospaced.com
  * License: MIT
  */
