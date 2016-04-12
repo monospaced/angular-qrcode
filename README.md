@@ -26,6 +26,11 @@ as element
 with QR options
 
     <qrcode version="2" error-correction-level="M" size="200" data="string"></qrcode>
+    
+The amount of data that a qrcode can contain is impacted by the `version` and the `error-correction-level`. 
+`version` designates the density of the encoding. If it isn't specified, it defaults to 4. If the `version` specified
+is too small to contain the data that was given, the next highest `version` will be tried automatically.
+The maximum version supported is `10`.
 
 as a downloadable image
 
@@ -33,9 +38,10 @@ as a downloadable image
 
 as a link to URL
 
-    <qrcode data="http://example.com" href="http://example.com"></qrcode>
+    <qrcode data="http://example.com" href="http://example.com" target="_new"></qrcode>
 
 `download` and `href` can’t be used on the same element (if `download` is present, `href` will be ignored)
+`target` is optional. If it is supplied, it will be applied to the <a> element that wraps the qrcode canvas.
 
 with expressions, observe changes
 
