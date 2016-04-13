@@ -60,12 +60,26 @@ The amount of data (measured in bits) must be within capacity according to the s
 
 Install
 -------
+Install angular-qrcode with bower or with npm:
 
     bower install monospaced/angular-qrcode
-
+    or
     npm install angular-qrcode
 
-Include the [qrcode generator library](https://raw.github.com/monospaced/bower-qrcode-generator/master/js/qrcode.js) and the `angular-qrcode.js` script provided by this component in your app, and add `monospaced.qrcode` to your app’s dependencies.
+
+angular-qrcode depends on [this qrcode generator library](https://raw.github.com/monospaced/bower-qrcode-generator/master/js/qrcode.js).
+You can install it manually by copy-pasting [this file](https://raw.github.com/monospaced/bower-qrcode-generator/master/js/qrcode.js) or by using bower:
+
+    bower install https://github.com/monospaced/bower-qrcode-generator.git#v0.1.0
+
+
+ Add `monospaced.qrcode` to your module's dependencies:
+
+     angular.module('yourModuleName', [
+        ...,
+        'monospaced.qrcode'
+     ])
+
 
 Demo
 ----------------
