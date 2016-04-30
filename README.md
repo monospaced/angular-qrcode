@@ -29,7 +29,7 @@ with QR options
 
 as a downloadable image
 
-    <qrcode data="string" download></qrcode>
+    <qrcode data="string" download-file-name="myQrCode" download></qrcode>
 
 as a link to URL
 
@@ -53,6 +53,8 @@ Permitted values
 * size: integer
 
 * download: boolean
+
+* download-file-name: name to download file as, without extension
 
 * href: URL
 
