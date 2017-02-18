@@ -117,7 +117,7 @@ The amount of data (measured in bits) must be within capacity according to the s
 Colour
 -------
 
-Here is a maintained fork that allows for setting of qrcode colours: https://github.com/bitpay/angular-qrcode/, with thanks to [BitPay](https://github.com/bitpay).
+Maintained fork that allows for setting of qrcode colours: https://github.com/bitpay/angular-qrcode/, with thanks to [BitPay](https://github.com/bitpay).
 
 Demo
 ----------------
