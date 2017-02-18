@@ -20,13 +20,13 @@ angular.module('monospaced.qrcode', [])
           'Q': 'Quartile',
           'H': 'High'
         },
-        draw = function(context, qr, modules, tile) {
+        draw = function(context, qr, modules, tile, filledBackground, unfilledBackground) {
           for (var row = 0; row < modules; row++) {
             for (var col = 0; col < modules; col++) {
               var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
                   h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
 
-              context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+              context.fillStyle = qr.isDark(row, col) ? filledBackground : unfilledBackground;
               context.fillRect(Math.round(col * tile),
                                Math.round(row * tile), w, h);
             }
@@ -43,6 +43,8 @@ angular.module('monospaced.qrcode', [])
             context = canvas2D ? canvas.getContext('2d') : null,
             download = 'download' in attrs,
             href = attrs.href,
+            filledBackground = attrs.filledBackground || '#000', 
+            unfilledBackground = attrs.unfilledBackground || '#fff',
             link = download || href ? document.createElement('a') : '',
             trim = /^\s+|\s+$/g,
             error,
@@ -110,7 +112,7 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (canvas2D) {
-                draw(context, qr, modules, tile);
+                draw(context, qr, modules, tile, filledBackground, unfilledBackground);
 
                 if (download) {
                   domElement.href = canvas.toDataURL('image/png');
@@ -141,6 +143,22 @@ angular.module('monospaced.qrcode', [])
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
         setSize(attrs.size);
+
+        attrs.$observe('filledBackground', function(value) {
+          if (!value) {
+            return;
+          }
+          filledBackground = value;
+          render();
+        });
+
+        attrs.$observe('unfilledBackground', function(value) {
+          if (!value) {
+            return;
+          }
+          unfilledBackground = value;
+          render();
+        });
 
         attrs.$observe('version', function(value) {
           if (!value) {

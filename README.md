@@ -112,6 +112,10 @@ Permitted values
 
 * href: URL
 
+* filled-background: Default '#000'
+
+* unfilled-background: Default '#fff'
+
 The amount of data (measured in bits) must be within capacity according to the selected version and error correction level, see http://www.qrcode.com/en/about/version.html.
 
 Colour
