@@ -1,6 +1,6 @@
 {
   "name": "angular-qrcode",
-  "version": "7.1.0",
+  "version": "7.1.2",
   "main": "angular-qrcode.js",
   "license" : "MIT",
   "ignore": [
