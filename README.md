@@ -112,12 +112,11 @@ Permitted values
 
 * href: URL
 
+* color: hex value, default black `#000`
+
+* background: hex value, default white `#fff`
+
 The amount of data (measured in bits) must be within capacity according to the selected version and error correction level, see http://www.qrcode.com/en/about/version.html.
-
-Colour
--------
-
-Maintained fork that allows for setting of qrcode colours: https://github.com/bitpay/angular-qrcode/, with thanks to [BitPay](https://github.com/bitpay).
 
 Demo
 ----------------
