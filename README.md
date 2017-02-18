@@ -20,13 +20,15 @@ npm install angular-qrcode
 
 ````html
 <script src="/node_modules/qrcode-generator/js/qrcode.js"></script>
-
-<!-- Optional -->
 <script src="/node_modules/qrcode-generator/js/qrcode_UTF8.js"></script>
-<script src="/node_modules/qrcode-generator/js/qrcode_SJIS.js"></script>
-<!-- Optional -->
-
 <script src="/node_modules/angular-qrcode/angular-qrcode.js"></script>
+````
+
+````js
+angular
+.module('your-module', [
+  'monospaced.qrcode',
+]);
 ````
 
 ### ES2015
@@ -35,7 +37,10 @@ npm install angular-qrcode
 import qrcode from 'qrcode-generator';
 import ngQrcode from 'angular-qrcode';
 
+// hacks for the browser
+// if using webpack there is a better solution below
 window.qrcode = qrcode;
+require('/node_modules/qrcode-generator/qrcode_UTF8');
 
 angular
 .module('your-module', [
@@ -43,14 +48,27 @@ angular
 ]);
 ````
 
-### Webpack
+### ES2015 + webpack
 
-As per ES2015 above, but instead of doing `window.qrcode = qrcode` you can add this to `webpack.config.js`:
+If we add the following to `webpack.config.js`:
 
 ````js
 new webpack.ProvidePlugin({
   qrcode: 'qrcode-generator',
 })
+````
+
+We can now import everything, no need for `window` or `require` hacks:
+
+````js
+import qrcode from 'qrcode-generator';
+import qrcode_UTF8 from '/node_modules/qrcode-generator/qrcode_UTF8';
+import ngQrcode from 'angular-qrcode';
+
+angular
+.module('your-module', [
+  ngQrcode,
+]);
 ````
 
 Important!
