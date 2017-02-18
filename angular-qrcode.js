@@ -1,8 +1,14 @@
 /*
- * angular-qrcode v6.2.1
- * (c) 2013 Monospaced http://monospaced.com
+ * angular-qrcode
+ * (c) 2017 Monospaced http://monospaced.com
  * License: MIT
  */
+
+if (typeof module !== 'undefined' &&
+    typeof exports !== 'undefined' &&
+    module.exports === exports){
+  module.exports = 'monospaced.qrcode';
+}
 
 angular.module('monospaced.qrcode', [])
   .directive('qrcode', ['$window', function($window) {
