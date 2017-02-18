@@ -20,13 +20,13 @@ angular.module('monospaced.qrcode', [])
           'Q': 'Quartile',
           'H': 'High'
         },
-        draw = function(context, qr, modules, tile) {
+        draw = function(context, qr, modules, tile, color) {
           for (var row = 0; row < modules; row++) {
             for (var col = 0; col < modules; col++) {
               var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
                   h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
 
-              context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+              context.fillStyle = qr.isDark(row, col) ? color.foreground : color.background;
               context.fillRect(Math.round(col * tile),
                                Math.round(row * tile), w, h);
             }
@@ -54,6 +54,16 @@ angular.module('monospaced.qrcode', [])
             tile,
             qr,
             $img,
+            color = {
+              foreground: '#000',
+              background: '#fff'
+            },
+            setColor = function(value) {
+              color.foreground = value || color.foreground;
+            },
+            setBackground = function(value) {
+              color.background = value || color.background;
+            },
             setVersion = function(value) {
               version = Math.max(1, Math.min(parseInt(value, 10), 40)) || 5;
             },
@@ -110,7 +120,7 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (canvas2D) {
-                draw(context, qr, modules, tile);
+                draw(context, qr, modules, tile, color);
 
                 if (download) {
                   domElement.href = canvas.toDataURL('image/png');
@@ -138,6 +148,8 @@ angular.module('monospaced.qrcode', [])
           domElement = domElement.firstChild;
         }
 
+        setColor(attrs.color);
+        setBackground(attrs.background);
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
         setSize(attrs.size);
@@ -180,6 +192,24 @@ angular.module('monospaced.qrcode', [])
           }
 
           setSize(value);
+          render();
+        });
+
+        attrs.$observe('color', function(value) {
+          if (!value) {
+            return;
+          }
+
+          setColor(value);
+          render();
+        });
+
+        attrs.$observe('background', function(value) {
+          if (!value) {
+            return;
+          }
+
+          setBackground(value);
           render();
         });
 
