@@ -1,6 +1,6 @@
 {
   "name": "angular-qrcode",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "QR Code elements for AngularJS.",
   "keywords": [
     "angular",
@@ -18,7 +18,7 @@
   "author": {
     "name" : "Scott Boyle",
     "email" : "scott@monospaced.com",
-    "url" : "http://scottboyle.co.uk/about"
+    "url" : "https://scottboyle.co.uk"
   },
   "files": [
     "angular-qrcode.js",
@@ -26,6 +26,6 @@
   ],
   "dependencies": {
     "angular": ">=1.0.6",
-    "qrcode-generator": "git://github.com/monospaced/bower-qrcode-generator.git#v0.1.0"
+    "qrcode-generator": "^1.1.0"
   }
 }
