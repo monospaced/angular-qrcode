@@ -1,6 +1,6 @@
 {
   "name": "angular-qrcode",
-  "version": "6.2.2",
+  "version": "7.0.0",
   "description": "QR Code elements for AngularJS.",
   "keywords": [
     "angular",
@@ -10,15 +10,15 @@
   "homepage": "http://monospaced.github.io/angular-qrcode/",
   "main": "angular-qrcode.js",
   "bugs": "http://github.com/monospaced/angular-qrcode/issues",
-  "license" : "MIT",
-  "repository" : {
-    "type" : "git",
-    "url" : "http://github.com/monospaced/angular-qrcode"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/monospaced/angular-qrcode"
   },
   "author": {
-    "name" : "Scott Boyle",
-    "email" : "scott@monospaced.com",
-    "url" : "https://scottboyle.co.uk"
+    "name": "Scott Boyle",
+    "email": "scott@monospaced.com",
+    "url": "https://scottboyle.co.uk"
   },
   "files": [
     "angular-qrcode.js",
