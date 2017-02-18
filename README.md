@@ -50,7 +50,7 @@ angular
 
 ### ES2015 + webpack
 
-If we add the following to `webpack.config.js`:
+Add the following to `webpack.config.js`:
 
 ````js
 new webpack.ProvidePlugin({
@@ -58,7 +58,7 @@ new webpack.ProvidePlugin({
 })
 ````
 
-We can now import everything, no need for `window` or `require` hacks:
+Import everything, no need for `window` or `require` hacks:
 
 ````js
 import qrcode from 'qrcode-generator';
