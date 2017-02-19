@@ -82,10 +82,13 @@ angular.module('monospaced.qrcode', [])
               try {
                 qr.make();
               } catch (e) {
+                var newVersion;
                 if (version >= 40) {
                   throw new Error('Data is too long', e);
                 }
-                setVersion(version + 1);
+                newVersion = version + 1;
+                setVersion(newVersion);
+                console.warn('qrcode version is too low and has been incremented to', newVersion)
                 setData(value);
                 return;
               }
