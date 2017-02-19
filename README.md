@@ -5,7 +5,7 @@ Angular QR Code
 <qrcode></qrcode>
 ````
 
-An AngularJS directive to creates QR Codes using Kazuhiko Arase’s [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) library.
+An AngularJS directive to create QR Codes using Kazuhiko Arase’s [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) library.
 
 [See it in action](http://monospaced.github.io/angular-qrcode).
 
