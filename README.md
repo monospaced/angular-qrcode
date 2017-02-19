@@ -72,11 +72,15 @@ angular
 ````
 
 Important!
------
+----------
 
-The `version` and `error-correction-level` parameters are very important.
+### Version and Error Correction
 
-__The selected `version` and `error-correction-level` must give a high enough capacity for the amount of `data` (bits) you are encoding, or the `qrcode` will not render__.
+The amount of data a qrcode can contain is impacted by its `version` and `error-correction-level`.
+
+`version` designates the density of the encoding. If it isn't specifed, it defaults to `5`. __If the `version` specified is too small to contain the data given, the next highest `version` will be tried automatically.__
+
+The maximum supported `version` is `40`, and `error-correction-level`defaults to `M`.
 
 For more information see http://www.qrcode.com/en/about/version.html.
 
@@ -92,7 +96,7 @@ as element
 with QR options
 
 ````html
-<qrcode version="2" error-correction-level="M" size="200" data="string"></qrcode>
+<qrcode data="string" version="2" error-correction-level="Q" size="200" color="#fff" ba kground="#000"></qrcode>
 ````
 
 as a downloadable image
@@ -112,7 +116,7 @@ as a link to URL
 with expressions, observe changes
 
 ````html
-<qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}" href="{{var}}" download></qrcode>
+<qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{var}}" href="{{var}}" color="{{color}}" background="{{background}}" download></qrcode>
 ````
 
 Options
@@ -120,21 +124,21 @@ Options
 
 Permitted values
 
-* version: 1-40
+* `version`: `1–40`  (default: `5`) _- if required, will be auto-incremented to contain data given_
 
-* error-correction-level: 'L', 'M', 'Q', 'H'
+* `error-correction-level`: `L`, `M`, `Q`, `H` (default: `M`)
 
-* size: integer
+* `size`: `integer` (default: `size` is calculated automatically)
 
-* download: boolean
+* `download`: `boolean` (default: `false`)
 
-* href: URL
+* `href`: `url` as `string`
 
-* color: hex value, default black `#000`
+* `color`: `hex` as `string` (default: `#000`)
 
-* background: hex value, default white `#fff`
+* `background`: `hex` as `string` (default: `#fff`)
 
-The amount of data (measured in bits) must be within capacity according to the selected version and error correction level, see http://www.qrcode.com/en/about/version.html.
+The amount of data (measured in bits) must be within capacity according to version and error correction level, see http://www.qrcode.com/en/about/version.html.
 
 Demo
 ----------------

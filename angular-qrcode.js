@@ -81,8 +81,12 @@ angular.module('monospaced.qrcode', [])
 
               try {
                 qr.make();
-              } catch(e) {
-                error = e.message;
+              } catch (e) {
+                if (version >= 40) {
+                  throw new Error('Data is too long', e);
+                }
+                setVersion(version + 1);
+                setData(value);
                 return;
               }
 
