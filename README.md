@@ -138,7 +138,7 @@ Permitted values
 
 * `background`: `hex` as `string` (default: `#fff`)
 
-The amount of data (measured in bits) must be within capacity according to version and error correction level, see http://www.qrcode.com/en/about/version.html.
+The amount of data (measured in bits) must be within capacity according to the `version` and `error correction level`, see http://www.qrcode.com/en/about/version.html.
 
 Demo
 ----------------
