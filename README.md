@@ -19,8 +19,8 @@ npm install angular-qrcode
 ### Script elements
 
 ````html
-<script src="/node_modules/qrcode-generator/js/qrcode.js"></script>
-<script src="/node_modules/qrcode-generator/js/qrcode_UTF8.js"></script>
+<script src="/node_modules/qrcode-generator/qrcode.js"></script>
+<script src="/node_modules/qrcode-generator/qrcode_UTF8.js"></script>
 <script src="/node_modules/angular-qrcode/angular-qrcode.js"></script>
 ````
 
