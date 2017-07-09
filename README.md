@@ -96,7 +96,7 @@ as element
 with QR options
 
 ````html
-<qrcode data="string" version="2" error-correction-level="Q" size="200" color="#fff" ba kground="#000"></qrcode>
+<qrcode data="string" version="2" error-correction-level="Q" size="200" color="#fff" background="#000"></qrcode>
 ````
 
 as a downloadable image
