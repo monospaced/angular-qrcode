@@ -35,12 +35,14 @@ angular.module('monospaced.qrcode', [])
 
     return {
       restrict: 'E',
-      template: '<canvas class="qrcode"></canvas>',
+      template: '<canvas class="qrcode"></canvas><canvas class="ng-hide"></canvas>',
       link: function(scope, element, attrs) {
         var domElement = element[0],
             $canvas = element.find('canvas'),
             canvas = $canvas[0],
+            canvasDownload = $canvas[1],
             context = canvas2D ? canvas.getContext('2d') : null,
+            contextDownload = canvas2D ? canvasDownload.getContext('2d') : null,
             download = 'download' in attrs,
             href = attrs.href,
             link = download || href ? document.createElement('a') : '',
@@ -50,9 +52,13 @@ angular.module('monospaced.qrcode', [])
             errorCorrectionLevel,
             data,
             size,
+            downloadSize,
             modules,
+            downloadModules,
             tile,
+            tileDownload,
             qr,
+            qrDownload,
             $img,
             color = {
               foreground: '#000',
@@ -79,8 +85,12 @@ angular.module('monospaced.qrcode', [])
               qr = qrcode(version, errorCorrectionLevel);
               qr.addData(data);
 
+              qrDownload = qrcode(version,errorCorrectionLevel);
+              qrDownload.addData(data);
+
               try {
                 qr.make();
+                qrDownload.make();
               } catch (e) {
                 var newVersion;
                 if (version >= 40) {
@@ -95,14 +105,20 @@ angular.module('monospaced.qrcode', [])
 
               error = false;
               modules = qr.getModuleCount();
+              downloadModules = qrDownload.getModuleCount();
             },
             setSize = function(value) {
               size = parseInt(value, 10) || modules * 2;
               tile = size / modules;
               canvas.width = canvas.height = size;
             },
+            setSizeDownload = function(value){
+              downloadSize = parseInt(value, 10) || downloadModules * 2;
+              tileDownload = downloadSize / downloadModules;
+              canvasDownload.width = canvasDownload.height = downloadSize;
+            },
             render = function() {
-              if (!qr) {
+              if (!qr || !qrDownload) {
                 return;
               }
 
@@ -129,7 +145,17 @@ angular.module('monospaced.qrcode', [])
               if (canvas2D) {
                 draw(context, qr, modules, tile, color);
 
+                if(downloadSize){
+                  draw(contextDownload, qrDownload, downloadModules,tileDownload, color);
+                  }
+
                 if (download) {
+
+                  if(downloadSize){
+                    domElement.href = canvasDownload.toDataURL('image/png');
+                    return;
+                    }
+
                   domElement.href = canvas.toDataURL('image/png');
                   return;
                 }
@@ -160,6 +186,7 @@ angular.module('monospaced.qrcode', [])
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
         setSize(attrs.size);
+        setSizeDownload(attrs.downloadSize);
 
         attrs.$observe('version', function(value) {
           if (!value) {
@@ -169,6 +196,7 @@ angular.module('monospaced.qrcode', [])
           setVersion(value);
           setData(data);
           setSize(size);
+          setSizeDownload(downloadSize);
           render();
         });
 
@@ -180,6 +208,7 @@ angular.module('monospaced.qrcode', [])
           setErrorCorrectionLevel(value);
           setData(data);
           setSize(size);
+          setSizeDownload(downloadSize);
           render();
         });
 
@@ -190,6 +219,7 @@ angular.module('monospaced.qrcode', [])
 
           setData(value);
           setSize(size);
+          setSizeDownload(downloadSize);
           render();
         });
 
@@ -228,6 +258,15 @@ angular.module('monospaced.qrcode', [])
           href = value;
           render();
         });
+
+        attrs.$observe('downloadSize', function(value){
+          if(!value){
+            return;
+          }
+
+          setSizeDownload(value);
+          render();
+          });
       }
     };
   }]);
