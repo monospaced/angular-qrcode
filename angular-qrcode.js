@@ -96,6 +96,15 @@ angular.module('monospaced.qrcode', [])
               error = false;
               modules = qr.getModuleCount();
             },
+            setVisibility = function (value) {
+              if (!value) {
+                  domElement.setAttribute("style", "display:none;");
+                  context.clearRect(0, 0, canvas.width, canvas.height);
+              }
+              else {
+                  domElement.setAttribute("style", "display:block;");
+              }
+            },
             setSize = function(value) {
               size = parseInt(value, 10) || modules * 2;
               tile = size / modules;
@@ -184,6 +193,8 @@ angular.module('monospaced.qrcode', [])
         });
 
         attrs.$observe('data', function(value) {
+          setVisibility(value);
+
           if (!value) {
             return;
           }
