@@ -97,8 +97,13 @@ angular.module('monospaced.qrcode', [])
               modules = qr.getModuleCount();
             },
             setSize = function(value) {
-              size = parseInt(value, 10) || modules * 2;
+              size = parseInt(value, 10) || modules * tile;
               tile = size / modules;
+              canvas.width = canvas.height = size;
+            },
+            setTile = function(value) {
+	      tile = parseInt(value, 10) || 2;
+              size = modules * tile;
               canvas.width = canvas.height = size;
             },
             render = function() {
@@ -159,6 +164,7 @@ angular.module('monospaced.qrcode', [])
         setBackground(attrs.background);
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
+        setTile(attrs.tile);
         setSize(attrs.size);
 
         attrs.$observe('version', function(value) {
@@ -199,6 +205,15 @@ angular.module('monospaced.qrcode', [])
           }
 
           setSize(value);
+          render();
+        });
+
+        attrs.$observe('tile', function(value) {
+          if (!value) {
+            return;
+          }
+
+          setTile(value);
           render();
         });
 

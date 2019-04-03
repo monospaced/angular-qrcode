@@ -128,7 +128,9 @@ Permitted values
 
 * `error-correction-level`: `L`, `M`, `Q`, `H` (default: `M`)
 
-* `size`: `integer` (default: `size` is calculated automatically)
+* `tile`: `integer` (default: 2)
+
+* `size`: `integer` (default: `size` is calculated automatically based on version and tile size)
 
 * `download`: `boolean` (default: `false`)
 
@@ -137,6 +139,8 @@ Permitted values
 * `color`: `hex` as `string` (default: `#000`)
 
 * `background`: `hex` as `string` (default: `#fff`)
+
+It does not make sense to specify both `tile` and `size`: either include `tile` and the size will be computed automatically based on version and tile size (`tile`), or include `size` and the tile size will be computed automatically based on version and size.
 
 The amount of data (measured in bits) must be within capacity according to the `version` and `error correction level`, see http://www.qrcode.com/en/about/version.html.
 

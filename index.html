@@ -114,7 +114,7 @@
 
   <pre>&lt;qrcode&gt;&lt;/qrcode&gt;</pre>
 
-  <qrcode error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" color="#FF69B4" background="#000"></qrcode>
+  <qrcode error-correction-level="{{e}}" size="{{s}}" tile="{{t}}" data="{{foo}}" color="#FF69B4" background="#000"></qrcode>
 
   <form>
     <p>
@@ -126,6 +126,10 @@
       <input id="size" type="number" data-ng-model="s">
     </p>
     <p>
+      <label for="tile">Tile size</label>
+      <input id="tile" type="number" data-ng-model="t">
+    </p>
+    <p>
       <label for="level" title="Error Correction Level">Level</label>
       <select id="level" data-ng-model="e" data-ng-options="option.version as option.name for option in [{name:'Low', version:'L'},{name:'Medium', version:'M'},{name:'Quartile', version:'Q'},{name:'High', version:'H'}]"></select>
     </p>
@@ -133,7 +137,7 @@
 
   <h2>Downloadable</h2>
 
-  <qrcode error-correction-level="{{e}}" size="{{s}}" data="{{foo}}" download></qrcode>
+  <qrcode error-correction-level="{{e}}" size="{{s}}" tile="{{t}}" data="{{foo}}" download></qrcode>
 
   <h2>Linked</h2>
 
@@ -155,7 +159,7 @@
   </div>
 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-  <script src="//kazuhikoarase.github.io/qrcode-generator/js/demo/assets/qrcode.js"></script>
+  <script src="node_modules/qrcode-generator/qrcode.js"></script>
   <script src="angular-qrcode.js"></script>
 </body>
 </html>
