@@ -34,6 +34,7 @@ angular.module('monospaced.qrcode', [])
         },
         drawImage=function(context,imgUrl,size,logoImgSize){
           var img = new Image();
+          img.setAttribute("crossOrigin",'Anonymous')
           img.onload = function(){
             context.drawImage(img,(size-logoImgSize)/2,(size-logoImgSize)/2,logoImgSize,logoImgSize)
           }
