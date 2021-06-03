@@ -138,7 +138,13 @@ Permitted values
 
 * `background`: `hex` as `string` (default: `#fff`)
 
+* `logo-img`: `url` as `string`
+
+* `logo-size`: `integer`
+
 The amount of data (measured in bits) must be within capacity according to the `version` and `error correction level`, see http://www.qrcode.com/en/about/version.html.
+
+if logo-img or logo-size is null,logo will not be show;
 
 Demo
 ----------------

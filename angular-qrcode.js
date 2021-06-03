@@ -31,6 +31,14 @@ angular.module('monospaced.qrcode', [])
                                Math.round(row * tile), w, h);
             }
           }
+        },
+        drawImage=function(context,imgUrl,size,logoImgSize){
+          var img = new Image();
+          img.onload = function(){
+            context.drawImage(img,(size-logoImgSize)/2,(size-logoImgSize)/2,logoImgSize,logoImgSize)
+          }
+      
+          img.src = imgUrl;
         };
 
     return {
@@ -54,6 +62,8 @@ angular.module('monospaced.qrcode', [])
             tile,
             qr,
             $img,
+            logoImg = attrs.logoImg,
+            logoSize = attrs.logoSize,
             color = {
               foreground: '#000',
               background: '#fff'
@@ -96,6 +106,12 @@ angular.module('monospaced.qrcode', [])
               error = false;
               modules = qr.getModuleCount();
             },
+            setLogoImg = function(value) {
+              logoImg = value;
+            },
+            setLogoSize = function(value) {
+              logoSize = parseInt(value, 10) || modules * 2;
+            },
             setSize = function(value) {
               size = parseInt(value, 10) || modules * 2;
               tile = size / modules;
@@ -128,7 +144,11 @@ angular.module('monospaced.qrcode', [])
 
               if (canvas2D) {
                 draw(context, qr, modules, tile, color);
-
+  
+                if(logoImg && logoSize){
+                  drawImage(context,logoImg,size,logoSize)
+                }
+                
                 if (download) {
                   domElement.href = canvas.toDataURL('image/png');
                   return;
@@ -160,6 +180,8 @@ angular.module('monospaced.qrcode', [])
         setVersion(attrs.version);
         setErrorCorrectionLevel(attrs.errorCorrectionLevel);
         setSize(attrs.size);
+        setLogoImg(attrs.logoImg);
+        setLogoSize(attrs.logoSize);
 
         attrs.$observe('version', function(value) {
           if (!value) {
@@ -226,6 +248,22 @@ angular.module('monospaced.qrcode', [])
           }
 
           href = value;
+          render();
+        });
+        
+        attrs.$observe('logoImg', function(value) {
+          if (!value) {
+            return;
+          }
+          setLogoImg(value)
+          render();
+        });
+        
+        attrs.$observe('logoSize', function(value) {
+          if (!value) {
+            return;
+          }
+          setLogoSize(value)
           render();
         });
       }
