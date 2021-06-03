@@ -145,7 +145,7 @@ angular.module('monospaced.qrcode', [])
               if (canvas2D) {
                 draw(context, qr, modules, tile, color);
   
-                if(logoImg && logoSize){
+                if(logoImg && logoSize && !isNaN(logoSize)){
                   drawImage(context,logoImg,size,logoSize)
                 }
                 
